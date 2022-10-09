@@ -6,8 +6,11 @@ class User
     int age;
     float height;
 public:
-
-    User(int a, float f) : age{ a }, height{ f } {}
+    User(int a, float f) : height{ f } 
+    {
+        if (a >= 0 && a < 100)
+            age = a;
+    }
 
     //User() : age{ 0 }, height{ 0 } {}
     User() : User(0, 0) {}
@@ -20,10 +23,15 @@ public:
     {
         return age;
     }
-    void SetAge(int a)
+    void SetAge(int age)
     {
-        if(a >= 0 && a <= 100)
-            age = a;
+        if(age >= 0 && age <= 100)
+            this->age = age;
+    }
+
+    User* GetThis()
+    {
+        return this;
     }
 };
 
@@ -54,29 +62,49 @@ class DArray
     int* items;
     int size;
 public:
-    DArray(int size = 0) : size{ size }
+    DArray() : size{ 0 }, items{ nullptr } {}
+    DArray(int size) : size{ size }
     {
         items = new int[size];
     }
     ~DArray()
     {
-        delete[]items;
+        if(items)
+            delete[]items;
     }
 };
 
+class SimpleList
+{
+    class Node
+    {
+        int value;
+        Node* next;
+    };
+
+    Node* head;
+public:
+
+};
+
+
+
 int main()
 {
-   
+  
     User user(35);
+
+    std::cout << &user << " " << user.GetThis() << "\n";
+
     std::cout << "User age: " << user.GetAge() << "\n";
 
+    user.SetAge(45);
 
-    //user.SetAge(45);
-
-    //std::cout << "User age: " << user.GetAge();
+    std::cout << "User age: " << user.GetAge();
 
     {
         DArray array(10);
     }
+    DArray arr0;
     
 }
